@@ -34,10 +34,15 @@ function LearnerProof() {
 
 function HeroArchitecture() {
   const nodes = ["USER", "NEXT.JS", "REST API", "SPRING BOOT", "DATABASE", "DOCKER", "CLOUD", "MONITORING"];
+  const [activeNode, setActiveNode] = useState(0);
+  useEffect(() => {
+    const timer = window.setInterval(() => setActiveNode((current) => (current + 1) % nodes.length), 6000 / nodes.length);
+    return () => window.clearInterval(timer);
+  }, []);
   return <div className="architecture" aria-label="Luồng từ người dùng đến hệ thống production">
     <div className="arch-label">SYSTEM FLOW <span>LIVE</span></div>
     <svg className="arch-connections" viewBox="0 0 500 520" fill="none" aria-hidden="true"><path className="connection-path" d="M54 70 L205 145 L58 224 L258 228 L155 318 L406 390 L241 480 L423 122" /><circle className="connection-packet" r="4"><animateMotion dur="6s" repeatCount="indefinite" path="M54 70 L205 145 L58 224 L258 228 L155 318 L406 390 L241 480 L423 122" /></circle></svg><div className="arch-line" />
-    {nodes.map((node, index) => { const Icon = nodeIcons[index % nodeIcons.length]; return <motion.div className={`arch-node node-${index}`} key={node} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.35 + index * 0.12, duration: 0.5 }}><div className="arch-icon"><Icon size={15} /></div><div><small>{index === 0 ? "ENTRY POINT" : index === nodes.length - 1 ? "OBSERVE" : `LAYER 0${index}`}</small><strong>{node}</strong></div><span className="status-dot" /></motion.div>; })}
+    {nodes.map((node, index) => { const Icon = nodeIcons[index % nodeIcons.length]; return <motion.div className={`arch-node node-${index} ${index === activeNode ? "is-active" : index < activeNode ? "is-passed" : ""}`} key={node} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.35 + index * 0.12, duration: 0.5 }}><div className="arch-icon"><Icon size={15} /></div><div><small>{index === 0 ? "ENTRY POINT" : index === nodes.length - 1 ? "OBSERVE" : `LAYER 0${index}`}</small><strong>{node}</strong></div><span className="status-dot" /></motion.div>; })}
     <motion.div className="data-packet" animate={{ opacity: [0, 1, 1, 0] }} transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 2 }} />
     <div className="arch-caption"><span className="pulse" />request → response <b>production ready</b></div>
   </div>;

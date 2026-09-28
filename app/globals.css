@@ -530,3 +530,16 @@ h1, h2, h3, .hero h1, .section-heading h2 { font-family: var(--heading); }
 .vertical-roadmap-stage.active > span { color: var(--cyan); }
 .vertical-roadmap-stage.active i { border-color: var(--emerald); background: var(--emerald); box-shadow: 0 0 0 4px rgba(66,231,176,.1), 0 0 18px rgba(66,231,176,.82); }
 .vertical-roadmap-stage.active strong { color: var(--ink); text-shadow: 0 0 14px rgba(244,247,251,.18); }
+
+/* Architecture nodes follow the same data packet as the connection path. */
+.roadmap-architecture .arch-node:not(.is-active) { border-color: rgba(57,217,232,.2); box-shadow: none; }
+.roadmap-architecture .arch-node:not(.is-active) .status-dot { background: #536273; box-shadow: none; opacity: .62; }
+.roadmap-architecture .arch-node:not(.is-active) .arch-icon { color: #6e8295; border-color: rgba(110,130,149,.2); background: rgba(110,130,149,.03); }
+.roadmap-architecture .arch-node:not(.is-active) strong { color: #8a98a8; }
+.roadmap-architecture .arch-node.is-passed { border-color: rgba(66,231,176,.3); box-shadow: 0 0 17px rgba(66,231,176,.06); }
+.roadmap-architecture .arch-node.is-passed .status-dot { background: rgba(66,231,176,.7); box-shadow: 0 0 8px rgba(66,231,176,.45); opacity: 1; }
+.roadmap-architecture .arch-node.is-passed .arch-icon { color: #74dfc0; border-color: rgba(66,231,176,.3); }
+.roadmap-architecture .arch-node.is-active { border-color: var(--emerald); box-shadow: 0 0 0 1px rgba(66,231,176,.15), 0 0 26px rgba(66,231,176,.2); }
+.roadmap-architecture .arch-node.is-active .status-dot { width: 7px; height: 7px; background: var(--emerald); box-shadow: 0 0 13px 2px rgba(66,231,176,.86); opacity: 1; }
+.roadmap-architecture .arch-node.is-active .arch-icon { color: var(--cyan); border-color: rgba(99,201,255,.58); background: rgba(99,201,255,.1); }
+.roadmap-architecture .arch-node.is-active strong { color: var(--ink); text-shadow: 0 0 12px rgba(244,247,251,.18); }
