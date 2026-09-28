@@ -431,3 +431,48 @@ h1, h2, h3, p { margin: 0; }.hero h1 { font-size: clamp(3.8rem, 8vw, 8rem); line
   .portfolio-selection-head strong { display: block; margin-top: 9px; text-align: left; line-height: 1.5; }
   .workspace-sidebar button { margin-top: 12px; }
 }
+
+/* Lesson recording and endlessly looping learner feedback. */
+.learner-proof-section { padding-top: 190px; overflow: hidden; }
+.learner-proof-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 50px; }
+.learner-proof-stamp { width: 170px; padding: 16px; border: 1px solid var(--line); color: var(--faint); font: 10px var(--mono); letter-spacing: .1em; }
+.learner-proof-stamp strong { display: block; margin-top: 13px; color: var(--ink); font: 700 24px/.88 var(--display); letter-spacing: -.08em; }
+.learner-proof-stamp em { color: var(--emerald); font-style: normal; }
+.learner-proof-grid { display: grid; grid-template-columns: minmax(320px, .9fr) minmax(0, 1.1fr); gap: 14px; margin-top: 70px; }
+.lesson-card, .feedback-rail { min-width: 0; border: 1px solid var(--line); background: rgba(7,14,25,.7); }
+.lesson-card { padding: 18px; }
+.lesson-card-top, .feedback-rail-head { display: flex; align-items: center; justify-content: space-between; gap: 15px; color: var(--faint); font: 10px var(--mono); letter-spacing: .11em; }
+.lesson-live { color: var(--emerald); }
+.lesson-live i { display: inline-block; width: 5px; height: 5px; margin-right: 6px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 9px var(--emerald); }
+.lesson-media { position: relative; aspect-ratio: 16 / 10; margin-top: 16px; overflow: hidden; border: 1px solid rgba(57,217,232,.23); background: #020304; }
+.lesson-media::after { content: "AI5.VN · FIRST SESSION"; position: absolute; right: 12px; bottom: 10px; color: rgba(255,255,255,.55); font: 9px var(--mono); letter-spacing: .1em; pointer-events: none; }
+.lesson-media iframe { display: block; width: 100%; height: 100%; border: 0; }
+.lesson-card-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-top: 17px; }
+.lesson-card-bottom small { display: block; color: var(--faint); font: 9px var(--mono); letter-spacing: .08em; }
+.lesson-card-bottom strong { display: block; margin-top: 6px; color: var(--ink); font-size: 18px; letter-spacing: -.04em; }
+.lesson-card-bottom a { display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto; padding: 10px 12px; color: var(--bg); background: var(--emerald); font: 700 10px var(--mono); letter-spacing: .06em; text-transform: uppercase; transition: transform .2s ease, box-shadow .2s ease; }
+.lesson-card-bottom a:hover { transform: translateY(-2px); box-shadow: 0 0 22px rgba(53,227,155,.25); }
+.feedback-rail { padding: 18px 0 0; overflow: hidden; }
+.feedback-rail-head { padding: 0 18px 16px; }
+.feedback-rail-head span:first-child { color: var(--cyan); }
+.feedback-marquee-viewport { position: relative; overflow: hidden; padding: 2px 0 24px; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.feedback-marquee-track { display: flex; width: max-content; gap: 13px; padding: 0 18px; animation: feedbackMarquee 34s linear infinite; }
+.feedback-shot { width: clamp(260px, 28vw, 350px); min-height: 270px; flex: 0 0 auto; display: flex; flex-direction: column; padding: 18px; border: 1px solid rgba(255,255,255,.13); border-radius: 3px; background: #101820; box-shadow: 0 13px 30px rgba(0,0,0,.2); }
+.feedback-shot.mint { background: linear-gradient(150deg, rgba(17,62,54,.9), #101820 72%); border-color: rgba(53,227,155,.33); }
+.feedback-shot.blue { background: linear-gradient(150deg, rgba(20,53,82,.92), #101820 72%); border-color: rgba(57,217,232,.3); }
+.feedback-shot.violet { background: linear-gradient(150deg, rgba(46,33,75,.92), #101820 72%); border-color: rgba(177,128,255,.3); }
+.feedback-shot.amber { background: linear-gradient(150deg, rgba(78,57,24,.92), #101820 72%); border-color: rgba(246,198,107,.32); }
+.feedback-shot-head { display: flex; align-items: center; gap: 10px; }
+.feedback-avatar { display: grid; width: 30px; height: 30px; place-items: center; border-radius: 50%; color: var(--bg); background: var(--emerald); font: 700 12px var(--mono); }
+.feedback-shot.blue .feedback-avatar { background: var(--cyan); }.feedback-shot.violet .feedback-avatar { background: #bc8dff; }.feedback-shot.amber .feedback-avatar { background: var(--amber); }
+.feedback-shot-head strong { display: block; color: var(--ink); font: 600 11px var(--mono); }
+.feedback-shot-head small { display: block; margin-top: 3px; color: var(--faint); font: 8px var(--mono); letter-spacing: .08em; }
+.feedback-check { margin-left: auto; color: var(--emerald); font: 600 14px var(--mono); }
+.feedback-shot p { margin-top: 26px; color: var(--ink); font-size: 21px; line-height: 1.2; letter-spacing: -.045em; }
+.feedback-shot blockquote { margin: 17px 0 0; padding: 13px 14px; border-left: 2px solid var(--cyan); color: var(--muted); background: rgba(0,0,0,.18); font-size: 13px; line-height: 1.45; }
+.feedback-shot-foot { display: flex; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 18px; color: var(--faint); font: 8px var(--mono); letter-spacing: .08em; }
+.feedback-shot-foot span:last-child { color: var(--ink); font-size: 18px; line-height: .6; }
+@keyframes feedbackMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .feedback-marquee-track { animation: none; overflow-x: auto; } }
+@media (max-width: 900px) { .learner-proof-heading { align-items: flex-start; flex-direction: column; gap: 28px; }.learner-proof-grid { grid-template-columns: 1fr; margin-top: 52px; }.learner-proof-stamp { width: 150px; }.feedback-shot { width: min(330px, 72vw); } }
+@media (max-width: 760px) { .learner-proof-section { padding-top: 140px; }.learner-proof-grid { margin-top: 45px; }.lesson-card-bottom { align-items: flex-start; flex-direction: column; }.lesson-card-bottom a { width: 100%; justify-content: center; }.feedback-rail { padding-top: 14px; }.feedback-rail-head { padding: 0 13px 13px; font-size: 8px; }.feedback-marquee-track { padding: 0 13px; }.feedback-shot { min-height: 245px; width: 78vw; padding: 15px; }.feedback-shot p { font-size: 19px; } }
