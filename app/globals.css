@@ -518,3 +518,15 @@ h1, h2, h3, .hero h1, .section-heading h2 { font-family: var(--heading); }
   .hero h1 { letter-spacing: -.075em; }
   .hero-copy { color: #aab6c5; }
 }
+
+/* Keep the roadmap highlight synchronized with the moving packet. */
+.vertical-roadmap-stage:not(.active) { color: #707d8d; }
+.vertical-roadmap-stage:not(.active) i { border-color: #667384; background: #05070b; box-shadow: 0 0 0 4px rgba(255,255,255,.015); }
+.vertical-roadmap-stage:not(.active) strong { color: #7b8797; text-shadow: none; }
+.vertical-roadmap-stage.passed { color: #b4c2d0; }
+.vertical-roadmap-stage.passed i { border-color: rgba(66,231,176,.62); background: rgba(66,231,176,.24); box-shadow: 0 0 10px rgba(66,231,176,.25); }
+.vertical-roadmap-stage.passed strong { color: #b4c2d0; }
+.vertical-roadmap-stage.active { color: var(--ink); }
+.vertical-roadmap-stage.active > span { color: var(--cyan); }
+.vertical-roadmap-stage.active i { border-color: var(--emerald); background: var(--emerald); box-shadow: 0 0 0 4px rgba(66,231,176,.1), 0 0 18px rgba(66,231,176,.82); }
+.vertical-roadmap-stage.active strong { color: var(--ink); text-shadow: 0 0 14px rgba(244,247,251,.18); }

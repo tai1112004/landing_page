@@ -46,7 +46,12 @@ function HeroArchitecture() {
 function MetricStrip() { return <div className="metric-strip">{programStats.map((item, index) => <Reveal key={item.label} delay={1.2 + index * 0.08}><div className="metric"><strong>{item.value}</strong><span>{item.label}</span></div></Reveal>)}</div>; }
 
 function HeroRoadmapPreview() {
-  return <div className="hero-roadmap-preview"><div className="hero-roadmap-label"><span>15-MONTH ROADMAP</span><b>8 STAGES / ONE SYSTEM</b></div><div className="hero-roadmap-system"><div className="vertical-roadmap"><div className="vertical-roadmap-line" />{roadmapStages.map((stage, index) => <div className={`vertical-roadmap-stage ${index === 0 ? "active" : ""}`} key={stage.id}><span>{stage.id}</span><i /><strong>{stage.name}</strong></div>)}<motion.div className="vertical-roadmap-packet" animate={{ top: ["3%", "97%"], opacity: [0, 1, 1, 0] }} transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }} /></div><div className="roadmap-architecture"><HeroArchitecture /></div></div></div>;
+  const [activeStage, setActiveStage] = useState(0);
+  useEffect(() => {
+    const timer = window.setInterval(() => setActiveStage((current) => (current + 1) % roadmapStages.length), 5500 / roadmapStages.length);
+    return () => window.clearInterval(timer);
+  }, []);
+  return <div className="hero-roadmap-preview"><div className="hero-roadmap-label"><span>15-MONTH ROADMAP</span><b>8 STAGES / ONE SYSTEM</b></div><div className="hero-roadmap-system"><div className="vertical-roadmap"><div className="vertical-roadmap-line" />{roadmapStages.map((stage, index) => <div className={`vertical-roadmap-stage ${index === activeStage ? "active" : index < activeStage ? "passed" : ""}`} key={stage.id}><span>{stage.id}</span><i /><strong>{stage.name}</strong></div>)}<motion.div className="vertical-roadmap-packet" animate={{ top: ["3%", "97%"], opacity: [0, 1, 1, 0] }} transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }} /></div><div className="roadmap-architecture"><HeroArchitecture /></div></div></div>;
 }
 
 function Hero() {
