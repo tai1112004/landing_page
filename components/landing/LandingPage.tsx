@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, MotionConfig, motion, useInView, useScroll, useSpring } from "framer-motion";
 import { ArrowDown, ArrowRight, ArrowUpRight, Check, ChevronDown, CircleDot, Cloud, Code2, Database, GitBranch, GitCommitHorizontal, LockKeyhole, Network, Rocket, Search, Server, ShieldCheck, Sparkles, Terminal, Workflow, Zap } from "lucide-react";
 import { GlobalBackground } from "@/components/effects/GlobalBackground";
+import { ClassroomGallery } from "./ClassroomGallery";
 import { careers, principles, programStats, roadmapStages, technologies } from "@/data/program";
 
 function Reveal({ children, className = "", delay = 0, direction = "up" }: { children: React.ReactNode; className?: string; delay?: number; direction?: "up" | "left" | "right" | "scale" }) {
@@ -61,6 +62,35 @@ function HeroRoadmapPreview() {
 
 function Hero() {
   return <section id="overview" className="hero section-shell"><div className="hero-orbit orbit-one" /><div className="hero-content"><Reveal delay={0.1}><div className="hero-badge"><span className="pulse" /> SOFTWARE ENGINEER PROGRAM <b>AI5.VN · 2026</b></div></Reveal><Reveal delay={0.2}><h1><span>Học để xây</span><br />hệ thống thật —<br /><em>đưa lên production.</em></h1></Reveal><Reveal delay={0.35}><p className="hero-copy">15 tháng đi xuyên suốt vòng đời một sản phẩm số: từ Backend, Frontend đến DevSecOps, Security, AI và dự án thương mại.</p></Reveal><Reveal delay={0.42}><div className="hero-stack" aria-label="Các lớp công nghệ"><span>JAVA / SPRING BOOT</span><b>+</b><span>REACT / NEXT.JS</span><b>+</b><span>DEVSECOPS</span><b>+</b><span>AI ENGINEERING</span></div></Reveal><Reveal delay={0.48}><div className="hero-proof"><ShieldCheck size={21} /><strong>Học để xây, triển khai và vận hành một sản phẩm thật</strong></div></Reveal><Reveal delay={0.56}><div className="hero-actions"><a className="button button-primary" href="#roadmap">Khám phá lộ trình <ArrowRight size={17} /></a><a className="button button-ghost" href="#contact">Đăng ký tư vấn</a></div></Reveal><MetricStrip /></div><Reveal className="hero-visual" direction="right" delay={0.25}><HeroArchitecture /></Reveal><HeroRoadmapPreview /><a className="scroll-cue" href="#mindset"><span>SCROLL TO EXPLORE</span><ArrowDown size={16} /></a></section>;
+}
+
+const programPromise = [
+  ["01", "XÂY ĐƯỢC", "Backend + Frontend", "Java, Spring Boot, React, Next.js."],
+  ["02", "ĐƯA LÊN ĐƯỢC", "Production", "Docker, Cloud, CI/CD, security, monitoring."],
+  ["03", "CHỨNG MINH ĐƯỢC", "Năng lực thật", "02 dự án thương mại và portfolio có minh chứng."],
+];
+
+const compactStages = [
+  ["01", "Backend Java", "API · Database · Security"],
+  ["02", "Frontend React / Next.js", "Product UI · Auth · Hiệu năng"],
+  ["03", "SEO Web & AI", "Tìm kiếm · Đo lường · AI"],
+  ["04", "DevSecOps & Cloud", "Docker · CI/CD · Monitoring"],
+  ["05", "02 dự án thương mại", "Teamwork · Nghiệm thu · Bàn giao"],
+  ["06", "Nghiên cứu khoa học", "Thực nghiệm · Báo cáo · Bảo vệ"],
+  ["07", "Chứng chỉ công nghệ", "Chuẩn hóa năng lực"],
+  ["08", "Freelance & bán code", "Portfolio · Proposal · Handover"],
+];
+
+function ProgramAtAGlance() {
+  return <section id="mindset" className="section-shell compact-intro-section"><Reveal><SectionTitle eyebrow="PROGRAM AT A GLANCE" title={<>Một chương trình.<br /><span>Một đích đến rõ ràng.</span></>} copy="Trở thành Software Engineer có thể xây, deploy và bàn giao sản phẩm thật." /></Reveal><div className="program-promise-grid">{programPromise.map(([number, label, title, copy], index) => <Reveal className="program-promise" key={number} delay={index * 0.08}><span>{number} · {label}</span><h3>{title}</h3><p>{copy}</p></Reveal>)}</div></section>;
+}
+
+function CompactRoadmap() {
+  return <section id="roadmap" className="section-shell compact-roadmap-section"><Reveal><SectionTitle eyebrow="15 THÁNG · 08 GIAI ĐOẠN" title={<>Lộ trình học để<br /><span>làm được việc.</span></>} copy="Đi từ nền tảng kỹ thuật đến sản phẩm, portfolio và cơ hội nghề nghiệp." /></Reveal><div className="compact-stage-grid">{compactStages.map(([number, title, copy], index) => <Reveal className="compact-stage" key={number} delay={index * 0.045}><span>{number}</span><h3>{title}</h3><p>{copy}</p></Reveal>)}</div></section>;
+}
+
+function ProgramOutcomes() {
+  return <section className="section-shell compact-outcomes-section"><Reveal><SectionTitle eyebrow="SAU CHƯƠNG TRÌNH" title={<>Không chỉ là CV.<br /><span>Là bộ hồ sơ năng lực.</span></>} copy="Có sản phẩm, có tài liệu kỹ thuật và có câu chuyện để nói trong buổi phỏng vấn." /></Reveal><div className="compact-outcomes"><Reveal className="compact-outcome" direction="left"><span>02</span><div><strong>Dự án thương mại</strong><p>Đi từ requirement đến deploy và bàn giao.</p></div></Reveal><Reveal className="compact-outcome" delay={0.08}><span>01</span><div><strong>Portfolio có minh chứng</strong><p>Repository, diagram, test, deploy và runbook.</p></div></Reveal><Reveal className="compact-outcome" direction="right" delay={0.16}><span>∞</span><div><strong>Hướng phát triển</strong><p>Backend, Frontend, Fullstack, DevOps hoặc Freelance.</p></div></Reveal></div></section>;
 }
 
 function Mindset() {
@@ -139,4 +169,4 @@ function OutcomesAndCareers() { return <><section className="section-shell compe
 
 function FinalCTA() { const [sent, setSent] = useState(false); return <section id="contact" className="section-shell final-section"><div className="final-lines" /> <Reveal><div className="final-copy"><span className="eyebrow">READY WHEN YOU ARE</span><h2>15 tháng để không chỉ học code —<br /><span>mà học cách trở thành một Software Engineer.</span></h2><p>Xây sản phẩm. Deploy production. Bảo mật hệ thống. Xử lý sự cố. Xây portfolio.</p></div></Reveal><Reveal className="contact-panel" direction="right"><div className="contact-panel-head"><span>START A CONVERSATION</span><Sparkles size={17} /></div>{sent ? <div className="success-state"><Check size={28} /><h3>Đã nhận thông tin.</h3><p>AI5.VN sẽ liên hệ với bạn trong thời gian phù hợp.</p><button className="button button-ghost" onClick={() => setSent(false)}>Gửi lại</button></div> : <form onSubmit={(event) => { event.preventDefault(); setSent(true); }}><label>Họ và tên<input required name="name" placeholder="Nguyễn Văn A" /></label><label>Số điện thoại<input required name="phone" placeholder="09xx xxx xxx" /></label><label>Email<input required type="email" name="email" placeholder="you@example.com" /></label><label>Mục tiêu học tập<select name="goal" defaultValue=""><option value="" disabled>Chọn một mục tiêu</option><option>Trở thành Fullstack Developer</option><option>Củng cố Backend / Frontend</option><option>Học DevSecOps & Cloud</option><option>Xây sản phẩm thương mại</option></select></label><button className="button button-primary" type="submit">Đăng ký tư vấn <ArrowUpRight size={17} /></button><small>Thông tin chỉ được dùng để tư vấn lộ trình phù hợp.</small></form>}</Reveal></section>; }
 
-export function LandingPage() { const { scrollYProgress } = useScroll(); const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 }); useEffect(() => { document.documentElement.style.setProperty("--scroll-progress", "0"); return () => { document.documentElement.style.removeProperty("--scroll-progress"); }; }, []); return <MotionConfig reducedMotion="user"><GlobalBackground /><motion.div className="scroll-progress" style={{ scaleX }} /><main><Hero /><Mindset /><Principles /><Roadmap /><Technology /><LearningLoop /><Projects /><AIAndProduction /><Portfolio /><LearnerProof /><OutcomesAndCareers /><FinalCTA /></main><footer className="site-footer"><div><span className="brand-mark">AI5</span><span className="brand-dot">.</span>VN</div><span>SOFTWARE ENGINEER / FULLSTACK DEVELOPER</span><p>Nội dung công nghệ, công cụ và case study có thể được điều chỉnh theo đầu vào lớp học, phiên bản công nghệ và nhu cầu thực tế của doanh nghiệp.</p><span>© 2026 AI5.VN</span></footer><div className="mobile-cta"><a href="#contact">ĐĂNG KÝ TƯ VẤN <ArrowUpRight size={16} /></a></div></MotionConfig>; }
+export function LandingPage() { const { scrollYProgress } = useScroll(); const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 }); useEffect(() => { document.documentElement.style.setProperty("--scroll-progress", "0"); return () => { document.documentElement.style.removeProperty("--scroll-progress"); }; }, []); return <MotionConfig reducedMotion="user"><GlobalBackground /><motion.div className="scroll-progress" style={{ scaleX }} /><main><Hero /><ProgramAtAGlance /><CompactRoadmap /><ProgramOutcomes /><LearnerProof /><ClassroomGallery /><FinalCTA /></main><footer className="site-footer"><div><span className="brand-mark">AI5</span><span className="brand-dot">.</span>VN</div><span>SOFTWARE ENGINEER / FULLSTACK DEVELOPER</span><p>Nội dung công nghệ, công cụ và case study có thể được điều chỉnh theo đầu vào lớp học, phiên bản công nghệ và nhu cầu thực tế của doanh nghiệp.</p><span>© 2026 AI5.VN</span></footer><div className="mobile-cta"><a href="#contact">ĐĂNG KÝ TƯ VẤN <ArrowUpRight size={16} /></a></div></MotionConfig>; }

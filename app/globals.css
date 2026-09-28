@@ -473,6 +473,66 @@ h1, h2, h3, p { margin: 0; }.hero h1 { font-size: clamp(3.8rem, 8vw, 8rem); line
 .feedback-shot-foot { display: flex; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 18px; color: var(--faint); font: 8px var(--mono); letter-spacing: .08em; }
 .feedback-shot-foot span:last-child { color: var(--ink); font-size: 18px; line-height: .6; }
 @keyframes feedbackMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* Two equal groups make the classroom photo loop seamless, including its gap. */
+.classroom-section { padding-top: 72px; }
+.classroom-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-bottom: 36px; }
+.classroom-heading .section-heading p { max-width: 620px; }
+.classroom-toggle { display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; gap: 9px; min-height: 44px; padding: 12px 18px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink); font-size: 13px; }
+.classroom-toggle:hover { border-color: var(--cyan); }
+.classroom-viewport { overflow: hidden; border-radius: 6px; }
+.classroom-track { display: flex; width: max-content; animation: feedbackMarquee 100s linear infinite; }
+.classroom-group { display: flex; flex: 0 0 auto; gap: 20px; padding-right: 20px; }
+.classroom-photo { flex: 0 0 auto; width: 520px; margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 6px; background: var(--bg-soft); }
+.classroom-photo.portrait { width: 280px; }
+.classroom-photo a { display: block; background: #070a10; }
+.classroom-photo img { display: block; width: 100%; height: 300px; object-fit: contain; }
+.classroom-photo figcaption { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 58px; padding: 16px 18px; color: var(--ink); font-size: 13px; }
+.classroom-photo figcaption svg { flex-shrink: 0; color: var(--cyan); }
+.classroom-hint { margin: 18px 0 0; color: var(--muted); font-size: 12px; }
+.classroom-viewport:hover .classroom-track, .classroom-viewport:focus-within .classroom-track { animation-play-state: paused !important; }
+.classroom-toggle:focus-visible, .classroom-viewport:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+.classroom-photo a:focus-visible { outline: 2px solid var(--cyan); outline-offset: -4px; }
+
+/* The overview replaces repeated explanatory sections with three short, scannable commitments. */
+.compact-intro-section, .compact-roadmap-section, .compact-outcomes-section { padding-block: 96px; }
+.program-promise-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin-top: 52px; border: 1px solid var(--line); background: var(--line); }
+.program-promise { min-height: 220px; padding: 30px; background: rgba(8, 14, 24, .9); }
+.program-promise > span { color: var(--cyan); font: 10px var(--mono); letter-spacing: .1em; }
+.program-promise h3 { margin: 42px 0 12px; color: var(--ink); font: 600 clamp(22px, 2vw, 30px)/1.12 var(--heading); letter-spacing: -.055em; }
+.program-promise p { max-width: 28ch; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+.compact-roadmap-section { border-block: 1px solid var(--line); }
+.compact-stage-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin-top: 52px; border: 1px solid var(--line); background: var(--line); }
+.compact-stage { min-height: 190px; padding: 25px 22px; background: var(--bg); }
+.compact-stage > span { display: block; color: var(--emerald); font: 500 12px var(--mono); }
+.compact-stage h3 { margin: 40px 0 9px; color: var(--ink); font: 600 19px/1.15 var(--heading); letter-spacing: -.04em; }
+.compact-stage p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.compact-outcomes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 48px; }
+.compact-outcome { display: flex; align-items: flex-start; gap: 18px; padding-top: 22px; border-top: 1px solid var(--line); }
+.compact-outcome > span { min-width: 42px; color: var(--amber); font: 600 32px/1 var(--heading); letter-spacing: -.06em; }
+.compact-outcome strong { display: block; color: var(--ink); font-size: 15px; }
+.compact-outcome p { margin: 7px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+@media (max-width: 760px) {
+  .compact-intro-section, .compact-roadmap-section, .compact-outcomes-section { padding-block: 64px; }
+  .program-promise-grid, .compact-outcomes { grid-template-columns: 1fr; gap: 0; }
+  .program-promise { min-height: 0; padding: 24px; }
+  .program-promise h3 { margin-top: 24px; }
+  .compact-stage-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 36px; }
+  .compact-stage { min-height: 162px; padding: 20px 16px; }
+  .compact-stage h3 { margin-top: 30px; font-size: 16px; }
+  .compact-outcomes { gap: 18px; margin-top: 36px; }
+  .classroom-section { padding-top: 56px; }
+  .classroom-heading { align-items: flex-start; flex-direction: column; gap: 24px; margin-bottom: 28px; }
+  .classroom-photo { width: 84vw; }
+  .classroom-photo.portrait { width: 220px; }
+  .classroom-photo img { height: 240px; }
+  .classroom-group { gap: 14px; padding-right: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .classroom-track { animation: none; }
+  .classroom-viewport { overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--cyan) var(--bg-soft); }
+  .classroom-group[aria-hidden="true"], .classroom-toggle { display: none; }
+}
 @media (prefers-reduced-motion: reduce) { .feedback-marquee-track { animation: none; overflow-x: auto; } }
 @media (max-width: 900px) { .learner-proof-heading { align-items: flex-start; flex-direction: column; gap: 28px; }.learner-proof-grid { grid-template-columns: 1fr; margin-top: 52px; }.learner-proof-stamp { width: 150px; }.feedback-shot { width: min(330px, 72vw); } }
 @media (max-width: 760px) { .learner-proof-section { padding-top: 140px; }.learner-proof-grid { margin-top: 45px; }.lesson-card-bottom { align-items: flex-start; flex-direction: column; }.lesson-card-bottom a { width: 100%; justify-content: center; }.feedback-rail { padding-top: 14px; }.feedback-rail-head { padding: 0 13px 13px; font-size: 8px; }.feedback-marquee-track { padding: 0 13px; }.feedback-shot { min-height: 245px; width: 78vw; padding: 15px; }.feedback-shot p { font-size: 19px; } }
