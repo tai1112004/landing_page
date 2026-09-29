@@ -7,15 +7,47 @@ import { GlobalBackground } from "@/components/effects/GlobalBackground";
 import { ClassroomGallery } from "./ClassroomGallery";
 import { careers, principles, programStats, roadmapStages, technologies } from "@/data/program";
 
-function Reveal({ children, className = "", delay = 0, direction = "up" }: { children: React.ReactNode; className?: string; delay?: number; direction?: "up" | "left" | "right" | "scale" }) {
+function Reveal({ children, className = "", delay = 0, direction = "up", tabIndex }: { children: React.ReactNode; className?: string; delay?: number; direction?: "up" | "left" | "right" | "scale"; tabIndex?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.16 });
   const initial = direction === "scale" ? { opacity: 0, scale: 0.94 } : direction === "left" ? { opacity: 0, x: -30 } : direction === "right" ? { opacity: 0, x: 30 } : { opacity: 0, y: 34 };
-  return <motion.div ref={ref} className={className} initial={initial} animate={inView ? { opacity: 1, x: 0, y: 0, scale: 1 } : initial} transition={{ duration: 0.72, delay, ease: [0.2, 0.7, 0.2, 1] }}>{children}</motion.div>;
+  return <motion.div ref={ref} className={className} tabIndex={tabIndex} initial={initial} animate={inView ? { opacity: 1, x: 0, y: 0, scale: 1 } : initial} transition={{ duration: 0.72, delay, ease: [0.2, 0.7, 0.2, 1] }}>{children}</motion.div>;
 }
 
 function SectionTitle({ eyebrow, title, copy }: { eyebrow: string; title: React.ReactNode; copy?: string }) {
   return <div className="section-heading"><span className="eyebrow">{eyebrow}</span><h2>{title}</h2>{copy && <p>{copy}</p>}</div>;
+}
+
+function CountUp({ value }: { value: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.8 });
+  const numericValue = Number.parseInt(value, 10);
+  const suffix = value.replace(/^\d+/, "");
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    if (!inView || Number.isNaN(numericValue)) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDisplayValue(numericValue);
+      return;
+    }
+    const start = performance.now();
+    const duration = 900;
+    let frame = 0;
+    const tick = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplayValue(Math.round(numericValue * eased));
+      if (progress < 1) frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [inView, numericValue]);
+
+  const formattedValue = displayValue >= numericValue
+    ? String(displayValue).padStart(value.length - suffix.length, "0")
+    : String(displayValue);
+  return <span ref={ref} aria-label={value}>{formattedValue}{suffix}</span>;
 }
 
 const nodeIcons = [Terminal, Code2, Server, Database, Cloud, Network];
@@ -49,7 +81,7 @@ function HeroArchitecture() {
   </div>;
 }
 
-function MetricStrip() { return <div className="metric-strip">{programStats.map((item, index) => <Reveal key={item.label} delay={1.2 + index * 0.08}><div className="metric"><strong>{item.value}</strong><span>{item.label}</span></div></Reveal>)}</div>; }
+function MetricStrip() { return <div className="metric-strip">{programStats.map((item, index) => <Reveal key={item.label} delay={1.2 + index * 0.08}><div className="metric"><strong><CountUp value={item.value} /></strong><span>{item.label}</span></div></Reveal>)}</div>; }
 
 function HeroRoadmapPreview() {
   const [activeStage, setActiveStage] = useState(0);
@@ -60,8 +92,12 @@ function HeroRoadmapPreview() {
   return <div className="hero-roadmap-preview"><div className="hero-roadmap-label"><span>15-MONTH ROADMAP</span><b>8 STAGES / ONE SYSTEM</b></div><div className="hero-roadmap-system"><div className="vertical-roadmap"><div className="vertical-roadmap-line" />{roadmapStages.map((stage, index) => <div className={`vertical-roadmap-stage ${index === activeStage ? "active" : index < activeStage ? "passed" : ""}`} key={stage.id}><span>{stage.id}</span><i /><strong>{stage.name}</strong></div>)}<motion.div className="vertical-roadmap-packet" animate={{ top: ["3%", "97%"], opacity: [0, 1, 1, 0] }} transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }} /></div><div className="roadmap-architecture"><HeroArchitecture /></div></div></div>;
 }
 
+function HeroProofCard() {
+  return <aside className="hero-proof-card" aria-label="Phản hồi của học viên"><div className="hero-proof-card-top"><span><i /> HỌC VIÊN K7</span><span>PROOF / 01</span></div><div className="hero-proof-score">8.5<span>điểm</span></div><blockquote>“Đc 8.5 anh ạ”</blockquote><p>Thầy đánh giá cao đồ án này lắm anh ạ.</p><div className="hero-proof-card-foot"><Check size={16} aria-hidden="true" /> HỌC THẬT · BẢO VỆ THẬT</div></aside>;
+}
+
 function Hero() {
-  return <section id="overview" className="hero section-shell"><div className="hero-orbit orbit-one" /><div className="hero-content"><Reveal delay={0.1}><div className="hero-badge"><span className="pulse" /> SOFTWARE ENGINEER PROGRAM <b>AI5.VN · 2026</b></div></Reveal><Reveal delay={0.2}><h1><span>Học để xây</span><br />hệ thống thật —<br /><em>đưa lên production.</em></h1></Reveal><Reveal delay={0.35}><p className="hero-copy">15 tháng đi xuyên suốt vòng đời một sản phẩm số: từ Backend, Frontend đến DevSecOps, Security, AI và dự án thương mại.</p></Reveal><Reveal delay={0.42}><div className="hero-stack" aria-label="Các lớp công nghệ"><span>JAVA / SPRING BOOT</span><b>+</b><span>REACT / NEXT.JS</span><b>+</b><span>DEVSECOPS</span><b>+</b><span>AI ENGINEERING</span></div></Reveal><Reveal delay={0.48}><div className="hero-proof"><ShieldCheck size={21} /><strong>Học để xây, triển khai và vận hành một sản phẩm thật</strong></div></Reveal><Reveal delay={0.56}><div className="hero-actions"><a className="button button-primary" href="#roadmap">Khám phá lộ trình <ArrowRight size={17} /></a><a className="button button-ghost" href="#contact">Đăng ký tư vấn</a></div></Reveal><MetricStrip /></div><Reveal className="hero-visual" direction="right" delay={0.25}><HeroArchitecture /></Reveal><HeroRoadmapPreview /><a className="scroll-cue" href="#mindset"><span>SCROLL TO EXPLORE</span><ArrowDown size={16} /></a></section>;
+  return <section id="overview" className="hero section-shell"><div className="hero-orbit orbit-one" /><div className="hero-content"><Reveal delay={0.1}><div className="hero-badge"><span className="pulse" /> SOFTWARE ENGINEER PROGRAM <b>AI5.VN · 2026</b></div></Reveal><Reveal delay={0.2}><h1><span>Học để làm được việc.</span><br /><em>Xây hệ thống thật.</em></h1></Reveal><Reveal delay={0.35}><p className="hero-copy">15 tháng từ Backend, Frontend đến DevSecOps — để bạn có dự án thật, portfolio thật và năng lực sẵn sàng cho công việc.</p></Reveal><Reveal delay={0.42}><div className="hero-stack" aria-label="Các lớp công nghệ"><span>JAVA / SPRING BOOT</span><b>+</b><span>REACT / NEXT.JS</span><b>+</b><span>DEVSECOPS</span><b>+</b><span>AI ENGINEERING</span></div></Reveal><Reveal delay={0.48}><div className="hero-actions"><a className="button button-primary" href="#contact">Nhận tư vấn lộ trình <ArrowRight size={17} /></a><a className="button button-ghost" href="#feedback">Xem feedback học viên</a></div></Reveal><MetricStrip /></div><Reveal className="hero-visual" direction="right" delay={0.25}><HeroProofCard /></Reveal><a className="scroll-cue" href="#feedback"><span>HỌC VIÊN NÓI GÌ</span><ArrowDown size={16} /></a></section>;
 }
 
 const programPromise = [
@@ -82,11 +118,18 @@ const compactStages = [
 ];
 
 function ProgramAtAGlance() {
+  const outcomeEvidence = [
+    ["01", "REPOSITORY", "Source code có cấu trúc, README và tài liệu để tiếp quản."],
+    ["02", "PRODUCT DEMO", "Sản phẩm chạy được với API, giao diện và luồng nghiệp vụ rõ ràng."],
+    ["03", "DEPLOYMENT", "Biết đưa hệ thống lên môi trường thật, theo dõi và xử lý sự cố."],
+    ["04", "PORTFOLIO", "Hồ sơ có dự án, bằng chứng kỹ thuật và câu chuyện để trình bày."],
+  ];
+  return <section id="mindset" className="section-shell compact-intro-section outcome-section"><Reveal><SectionTitle eyebrow="KẾT QUẢ SAU 15 THÁNG" title={<>Không chỉ học thêm công nghệ.<br /><span>Bạn có một hệ thống năng lực.</span></>} copy="Từ code đầu tiên đến sản phẩm production, portfolio và hồ sơ đủ để tự tin bước vào thị trường." /></Reveal><div className="outcome-lead"><Reveal className="outcome-number" direction="left"><span>15</span><small>THÁNG ĐỂ XÂY NĂNG LỰC</small><strong>Từ người học<br /><em>→ người xây được hệ thống.</em></strong></Reveal><div className="program-promise-grid">{programPromise.map(([number, label, title, copy], index) => <Reveal className={"program-promise outcome-card outcome-card-" + (index + 1)} key={number} delay={index * 0.08}><span>{number} · {label}</span><h3>{title}</h3><p>{copy}</p></Reveal>)}</div></div><div className="outcome-evidence" aria-label="Bằng chứng đầu ra của chương trình">{outcomeEvidence.map(([number, label, copy], index) => <Reveal className="outcome-evidence-item" key={number} delay={index * 0.06}><span>{number}</span><div><strong>{label}</strong><p>{copy}</p></div>{index < outcomeEvidence.length - 1 && <ArrowRight className="outcome-evidence-arrow" size={16} aria-hidden="true" />}</Reveal>)}</div></section>;
   return <section id="mindset" className="section-shell compact-intro-section"><Reveal><SectionTitle eyebrow="PROGRAM AT A GLANCE" title={<>Một chương trình.<br /><span>Một đích đến rõ ràng.</span></>} copy="Trở thành Software Engineer có thể xây, deploy và bàn giao sản phẩm thật." /></Reveal><div className="program-promise-grid">{programPromise.map(([number, label, title, copy], index) => <Reveal className="program-promise" key={number} delay={index * 0.08}><span>{number} · {label}</span><h3>{title}</h3><p>{copy}</p></Reveal>)}</div></section>;
 }
 
 function CompactRoadmap() {
-  return <section id="roadmap" className="section-shell compact-roadmap-section"><Reveal><SectionTitle eyebrow="15 THÁNG · 08 GIAI ĐOẠN" title={<>Lộ trình học để<br /><span>làm được việc.</span></>} copy="Đi từ nền tảng kỹ thuật đến sản phẩm, portfolio và cơ hội nghề nghiệp." /></Reveal><div className="compact-stage-grid">{compactStages.map(([number, title, copy], index) => <Reveal className="compact-stage" key={number} delay={index * 0.045}><span>{number}</span><h3>{title}</h3><p>{copy}</p></Reveal>)}</div></section>;
+  return <section id="roadmap" className="section-shell compact-roadmap-section"><Reveal><SectionTitle eyebrow="15 THÁNG · 08 GIAI ĐOẠN" title={<>Lộ trình học để<br /><span>làm được việc.</span></>} copy="Đi từ nền tảng kỹ thuật đến sản phẩm, portfolio và cơ hội nghề nghiệp." /></Reveal><div className="compact-stage-grid">{roadmapStages.map((stage, index) => <Reveal className="compact-stage" key={stage.id} delay={index * 0.045} tabIndex={0}><span>{stage.id}</span><h3>{stage.name}</h3><p>{compactStages[index][2]}</p><div className="compact-stage-detail"><strong>HỌC ĐƯỢC GÌ</strong><div className="compact-stage-topics">{stage.topics.slice(0, 4).map((topic) => <span key={topic}>{topic}</span>)}</div><small>{stage.output}</small></div></Reveal>)}</div></section>;
 }
 
 function ProgramOutcomes() {
@@ -182,6 +225,18 @@ function Portfolio() {
 
 function OutcomesAndCareers() { return <><section className="section-shell competency-section"><Reveal><SectionTitle eyebrow="COMPETENCY OUTPUT" title={<>Sau 15 tháng,<br /><span>bạn mang theo một hệ thống năng lực.</span></>} /></Reveal><div className="competency-map">{["Backend Engineering", "Frontend Engineering", "Fullstack Integration", "DevSecOps & Cloud", "Security & Reliability", "Performance & Troubleshooting", "AI-assisted Engineering", "SEO & Product Growth", "Research & Evidence", "Commercial & Professional"].map((item, index) => <Reveal key={item} delay={index * 0.04} className={`competency-node node-${index}`}><span>{String(index + 1).padStart(2, "0")}</span>{item}</Reveal>)}</div></section><section id="careers" className="section-shell career-section"><Reveal><SectionTitle eyebrow="CAREER PATH" title={<>Một nền tảng.<br /><span>Nhiều hướng phát triển.</span></>} copy="Chương trình mở ra các hướng đi theo thế mạnh và portfolio thực tế — không đóng khung bạn vào một chức danh duy nhất." /></Reveal><div className="career-tree"><div className="career-root"><span className="pulse" /> SOFTWARE ENGINEER</div><div className="career-branches">{careers.map((career, index) => <Reveal key={career} delay={index * 0.05} className="career-branch"><i /><span>{career}</span><ArrowUpRight size={14} /></Reveal>)}</div></div></section><section className="section-shell evaluation-section"><Reveal><SectionTitle eyebrow="EVALUATION" title={<>Không đánh giá bằng việc nhớ bao nhiêu.<br /><span>Đánh giá bằng việc làm được gì.</span></>} /></Reveal><div className="evaluation-flow">{[["01", "FOUNDATION", "quiz · mini-lab · explain"], ["02", "INTEGRATION", "backend · database · security · frontend"], ["03", "PRODUCTION", "deploy · CI/CD · monitoring · rollback"], ["04", "PROJECT", "architecture · review · acceptance"], ["05", "FINAL DEFENSE", "demo · trade-off · incident · AI audit"]].map(([id, title, copy], index) => <Reveal key={id} className="evaluation-step" delay={index * 0.08}><span>{id}</span><h3>{title}</h3><p>{copy}</p>{index < 4 && <ArrowRight size={17} />}</Reveal>)}</div></section></>; }
 
+function FAQ() {
+  const questions = [
+    ["Người mới bắt đầu có theo được không?", "Có. Lộ trình đi từ nền tảng Java, frontend và tư duy hệ thống trước khi vào các phần production."],
+    ["Lịch học và hình thức học như thế nào?", "Chương trình kéo dài 15 tháng, kết hợp buổi học kỹ thuật, thực hành, review và dự án thương mại."],
+    ["Nếu bỏ lỡ một buổi học thì sao?", "Bạn có thể xem lại nội dung và tiếp tục theo lộ trình. Học viên cũng được hỗ trợ để không bị đứt mạch thực hành."],
+    ["Sau khóa học có được hỗ trợ việc làm không?", "Chương trình hỗ trợ định hướng vị trí, hoàn thiện portfolio và chuẩn bị bằng chứng kỹ thuật cho quá trình ứng tuyển."],
+    ["Học xong tôi có được học lại không?", "Có. Một đặc quyền của chương trình là được quay lại học và cập nhật công nghệ cùng các khóa sau."],
+  ];
+  const [open, setOpen] = useState(0);
+  return <section id="faq" className="section-shell faq-section"><Reveal><SectionTitle eyebrow="CÂU HỎI THƯỜNG GẶP" title={<>Trước khi bắt đầu,<br /><span>bạn cần biết gì?</span></>} copy="Những câu hỏi thực tế nhất về cách học, đầu ra và sự đồng hành trong chương trình." /></Reveal><div className="faq-list">{questions.map(([question, answer], index) => <Reveal className={`faq-item${open === index ? " is-open" : ""}`} key={question} delay={index * 0.05}><button type="button" aria-expanded={open === index} onClick={() => setOpen(open === index ? -1 : index)}><span>{String(index + 1).padStart(2, "0")}</span><strong>{question}</strong><ChevronDown size={18} /></button><div className="faq-answer"><p>{answer}</p></div></Reveal>)}</div></section>;
+}
+
 function FinalCTA() { const [sent, setSent] = useState(false); return <section id="contact" className="section-shell final-section"><div className="final-lines" /> <Reveal><div className="final-copy"><span className="eyebrow">READY WHEN YOU ARE</span><h2>15 tháng để không chỉ học code —<br /><span>mà học cách trở thành một Software Engineer.</span></h2><p>Xây sản phẩm. Deploy production. Bảo mật hệ thống. Xử lý sự cố. Xây portfolio.</p></div></Reveal><Reveal className="contact-panel" direction="right"><div className="contact-panel-head"><span>START A CONVERSATION</span><Sparkles size={17} /></div>{sent ? <div className="success-state"><Check size={28} /><h3>Đã nhận thông tin.</h3><p>AI5.VN sẽ liên hệ với bạn trong thời gian phù hợp.</p><button className="button button-ghost" onClick={() => setSent(false)}>Gửi lại</button></div> : <form onSubmit={(event) => { event.preventDefault(); setSent(true); }}><label>Họ và tên<input required name="name" placeholder="Nguyễn Văn A" /></label><label>Số điện thoại<input required name="phone" placeholder="09xx xxx xxx" /></label><label>Email<input required type="email" name="email" placeholder="you@example.com" /></label><label>Mục tiêu học tập<select name="goal" defaultValue=""><option value="" disabled>Chọn một mục tiêu</option><option>Trở thành Fullstack Developer</option><option>Củng cố Backend / Frontend</option><option>Học DevSecOps & Cloud</option><option>Xây sản phẩm thương mại</option></select></label><button className="button button-primary" type="submit">Đăng ký tư vấn <ArrowUpRight size={17} /></button><small>Thông tin chỉ được dùng để tư vấn lộ trình phù hợp.</small></form>}</Reveal></section>; }
 
-export function LandingPage() { const { scrollYProgress } = useScroll(); const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 }); useEffect(() => { document.documentElement.style.setProperty("--scroll-progress", "0"); return () => { document.documentElement.style.removeProperty("--scroll-progress"); }; }, []); return <MotionConfig reducedMotion="user"><GlobalBackground /><motion.div className="scroll-progress" style={{ scaleX }} /><main><Hero /><ProgramAtAGlance /><CompactRoadmap /><ProgramOutcomes /><ProgramPrivileges /><LearnerProof /><ClassroomGallery /><FinalCTA /></main><footer className="site-footer"><div><span className="brand-mark">AI5</span><span className="brand-dot">.</span>VN</div><span>SOFTWARE ENGINEER / FULLSTACK DEVELOPER</span><p>Nội dung công nghệ, công cụ và case study có thể được điều chỉnh theo đầu vào lớp học, phiên bản công nghệ và nhu cầu thực tế của doanh nghiệp.</p><span>© 2026 AI5.VN</span></footer><div className="mobile-cta"><a href="#contact">ĐĂNG KÝ TƯ VẤN <ArrowUpRight size={16} /></a></div></MotionConfig>; }
+export function LandingPage() { const { scrollYProgress } = useScroll(); const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 }); useEffect(() => { document.documentElement.style.setProperty("--scroll-progress", "0"); return () => { document.documentElement.style.removeProperty("--scroll-progress"); }; }, []); return <MotionConfig reducedMotion="user"><GlobalBackground /><motion.div className="scroll-progress" style={{ scaleX }} /><main><Hero /><LearnerProof /><ClassroomGallery /><ProgramPrivileges /><ProgramAtAGlance /><CompactRoadmap /><ProgramOutcomes /><FAQ /><FinalCTA /></main><footer className="site-footer"><div><span className="brand-mark">AI5</span><span className="brand-dot">.</span>VN</div><span>SOFTWARE ENGINEER / FULLSTACK DEVELOPER</span><p>Nội dung công nghệ, công cụ và case study có thể được điều chỉnh theo đầu vào lớp học, phiên bản công nghệ và nhu cầu thực tế của doanh nghiệp.</p><span>© 2026 AI5.VN</span></footer><div className="mobile-cta"><a href="#contact">ĐĂNG KÝ TƯ VẤN <ArrowUpRight size={16} /></a></div></MotionConfig>; }
