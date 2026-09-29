@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 
 const links = [
@@ -8,25 +8,33 @@ const links = [
 ];
 
 const priorityLinks = [
-  ["overview", "Tổng quan"], ["feedback", "Feedback"], ["classroom", "Hình ảnh lớp"], ["mindset", "Kết quả"], ["roadmap", "Lộ trình"], ["faq", "FAQ"],
+  ["overview", "Tổng quan"], ["offer", "Ưu đãi"], ["feedback", "Feedback"], ["classroom", "Hình ảnh lớp"], ["mindset", "Kết quả"], ["roadmap", "Lộ trình"], ["faq", "FAQ"],
 ];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [active, setActive] = useState("overview");
   const [open, setOpen] = useState(false);
+  const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let frame = 0;
     const onScroll = () => {
-      setScrolled(window.scrollY > 20);
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(max > 0 ? window.scrollY / max : 0);
+      setScrolled((current) => {
+        const next = window.scrollY > 20;
+        return current === next ? current : next;
+      });
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        if (progressRef.current) progressRef.current.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+      });
     };
     const observer = new IntersectionObserver((entries) => entries.forEach((entry) => entry.isIntersecting && setActive(entry.target.id)), { rootMargin: "-30% 0px -55% 0px" });
     priorityLinks.forEach(([id]) => { const section = document.getElementById(id); if (section) observer.observe(section); });
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => { observer.disconnect(); window.removeEventListener("scroll", onScroll); };
+    return () => { observer.disconnect(); window.removeEventListener("scroll", onScroll); if (frame) window.cancelAnimationFrame(frame); };
   }, []);
 
   const goTo = (id: string) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setOpen(false); };
@@ -41,7 +49,7 @@ export function Navbar() {
         </nav>
         <button className="menu-toggle" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Đóng menu" : "Mở menu"}>{open ? <X /> : <Menu />}</button>
       </div>
-      <div className="nav-progress" style={{ transform: `scaleX(${progress})` }} />
+      <div ref={progressRef} className="nav-progress" />
     </header>
   );
 }

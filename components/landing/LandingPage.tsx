@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, MotionConfig, motion, useInView, useScroll, useSpring } from "framer-motion";
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, ChevronDown, CircleDot, Cloud, Code2, Database, GitBranch, GitCommitHorizontal, LockKeyhole, Network, Rocket, Search, Server, ShieldCheck, Sparkles, Terminal, Workflow, Zap } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, BadgeCheck, Bell, BriefcaseBusiness, Check, ChevronDown, CircleDot, Cloud, Code2, Database, FileText, GitBranch, GitCommitHorizontal, GraduationCap, Handshake, LockKeyhole, Network, RefreshCw, Rocket, Search, Server, ShieldCheck, Sparkles, Terminal, Users, Workflow, Zap } from "lucide-react";
 import { GlobalBackground } from "@/components/effects/GlobalBackground";
 import { ClassroomGallery } from "./ClassroomGallery";
+import { FeedbackGallery } from "./FeedbackGallery";
 import { careers, principles, programStats, roadmapStages, technologies } from "@/data/program";
 
 function Reveal({ children, className = "", delay = 0, direction = "up", tabIndex }: { children: React.ReactNode; className?: string; delay?: number; direction?: "up" | "left" | "right" | "scale"; tabIndex?: number }) {
@@ -51,18 +52,8 @@ function CountUp({ value }: { value: string }) {
 }
 
 const nodeIcons = [Terminal, Code2, Server, Database, Cloud, Network];
-const feedbackItems = [
-  { name: "Học viên K7", tag: "SAU BUỔI BẢO VỆ", quote: "Đc 8.5 anh ạ", detail: "Thầy đánh giá cao đồ án này lắm anh ạ", tone: "mint" },
-  { name: "Học viên K7", tag: "SAU BUỔI REVIEW", quote: "Báo cáo chi tiết quá trời luôn anh ạ", detail: "Em cảm ơn anh nhiều ạ", tone: "blue" },
-  { name: "Học viên K7", tag: "SAU BUỔI HỌC", quote: "Làm việc với anh sướng nhỉ, học 1 hôm xách đít đi bảo vệ có ngay 8,5đ", detail: "Quá tuyệt luôn anh ơi", tone: "violet" },
-  { name: "Học viên K7", tag: "SAU KHI NHẬN FEEDBACK", quote: "Thầy bảo hiện tại đang làm tốt, cứ tiếp tục phát huy", detail: "Có gì thầy trao đổi thêm sau ạ", tone: "amber" },
-];
-const firstLessonUrl = "https://drive.google.com/file/d/18RngnsOa-rhYUtTaWjCg0U_iT6AmvOTV/view?usp=sharing";
-const firstLessonPreviewUrl = "https://drive.google.com/file/d/18RngnsOa-rhYUtTaWjCg0U_iT6AmvOTV/preview";
-
 function LearnerProof() {
-  const marqueeItems = [...feedbackItems, ...feedbackItems];
-  return <section id="feedback" className="section-shell learner-proof-section"><div className="learner-proof-heading"><Reveal><SectionTitle eyebrow="LEARNER PROOF" title={<>Học thật.<br /><span>Feedback thật.</span></>} copy="Một buổi học mở ra bằng hệ thống thật. Kết quả được nhìn thấy qua đồ án, buổi bảo vệ và lời phản hồi của chính học viên." /></Reveal><Reveal className="learner-proof-stamp" direction="right"><span>SESSION / K7</span><strong>FIRST<br /><em>CLASS</em></strong></Reveal></div><div className="learner-proof-grid"><Reveal className="lesson-card" direction="left"><div className="lesson-card-top"><span>01 · KHAI GIẢNG</span><span className="lesson-live"><i /> RECORDING</span></div><div className="lesson-media"><iframe title="Buổi học đầu tiên của chương trình Software Engineer" src={firstLessonPreviewUrl} allow="autoplay; fullscreen" loading="lazy" /></div><div className="lesson-card-bottom"><div><small>PROGRAM SOFTWARE ENGINEER / FULLSTACK</small><strong>Buổi học đầu tiên</strong></div><a href={firstLessonUrl} target="_blank" rel="noreferrer">Mở buổi học <ArrowUpRight size={16} /></a></div></Reveal><Reveal className="feedback-rail" direction="right"><div className="feedback-rail-head"><span>STUDENT FEEDBACK / 04</span><span>LOOPING MARQUEE</span></div><div className="feedback-marquee-viewport"><div className="feedback-marquee-track">{marqueeItems.map((item, index) => <article className={`feedback-shot ${item.tone}`} key={`${item.tag}-${index}`}><div className="feedback-shot-head"><span className="feedback-avatar">{item.name.slice(-2, -1)}</span><div><strong>{item.name}</strong><small>{item.tag}</small></div><span className="feedback-check">✓</span></div><p>{item.quote}</p><blockquote>{item.detail}</blockquote><div className="feedback-shot-foot"><span>STUDENT / VERIFIED</span><span>♡</span></div></article>)}</div></div></Reveal></div></section>;
+  return <section id="feedback" className="section-shell learner-proof-section learner-proof-section--images"><Reveal><SectionTitle eyebrow="LEARNER PROOF" title={<>Học thật.<br /><span>Feedback thật.</span></>} copy="Ảnh chụp nguyên bản từ học viên, giữ nguyên ngữ cảnh để bạn tự đánh giá trải nghiệm học tập." /></Reveal><FeedbackGallery /></section>;
 }
 
 function HeroArchitecture() {
@@ -93,7 +84,7 @@ function HeroRoadmapPreview() {
 }
 
 function HeroProofCard() {
-  return <aside className="hero-proof-card" aria-label="Phản hồi của học viên"><div className="hero-proof-card-top"><span><i /> HỌC VIÊN K7</span><span>PROOF / 01</span></div><div className="hero-proof-score">8.5<span>điểm</span></div><blockquote>“Đc 8.5 anh ạ”</blockquote><p>Thầy đánh giá cao đồ án này lắm anh ạ.</p><div className="hero-proof-card-foot"><Check size={16} aria-hidden="true" /> HỌC THẬT · BẢO VỆ THẬT</div></aside>;
+  return <aside className="hero-proof-card hero-proof-card--trust" aria-label="Cách AI5.VN đồng hành cùng học viên"><div className="hero-proof-card-top"><span><i /> LEARNING PARTNER</span><span>PROOF / REAL WORK</span></div><div className="hero-proof-trust-title">Học để<br /><em>làm được việc.</em></div><ul><li>Được chấm và review code.</li><li>Hiểu sai ở đâu, vì sao sai.</li><li>Đồng hành đến khi hiểu bản chất.</li></ul><div className="hero-proof-card-foot"><Check size={16} aria-hidden="true" /> HỌC THẬT · REVIEW THẬT</div></aside>;
 }
 
 function Hero() {
@@ -146,9 +137,32 @@ const programPrivileges = [
   ["07", "Đội ngũ giảng viên thực chiến", "Tech Lead 8+ năm kinh nghiệm, chủ doanh nghiệp và chuyên gia từ các tập đoàn công nghệ."],
   ["08", "Vượt qua tư duy Intern & Fresher", "Học cách làm như Junior Developer 2+ năm: dự án thật và quy trình thương mại."],
 ];
+const privilegeIcons = [Users, RefreshCw, BriefcaseBusiness, FileText, GraduationCap, Handshake, BadgeCheck, Rocket];
+
+function UrgencyOffer() {
+  const [secondsLeft, setSecondsLeft] = useState(6 * 60 * 60);
+  useEffect(() => {
+    const timer = window.setInterval(() => setSecondsLeft((current) => current > 0 ? current - 1 : 0), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
+  const hours = String(Math.floor(secondsLeft / 3600)).padStart(2, "0");
+  const minutes = String(Math.floor((secondsLeft % 3600) / 60)).padStart(2, "0");
+  const seconds = String(secondsLeft % 60).padStart(2, "0");
+  return <section id="offer" className="section-shell urgency-offer-section"><div className="urgency-offer"><div><span className="eyebrow">ƯU ĐÃI TƯ VẤN TRONG 6 GIỜ</span><h2>Đăng ký để nhận tư vấn tận tình<br /><span>và ưu đãi học phí lên tới 11 triệu.</span></h2><p>Để lại thông tin trong thời gian ưu đãi để được tư vấn lộ trình phù hợp với mục tiêu của bạn.</p></div><div className="urgency-offer-action"><div className="urgency-timer" aria-label={`Thời gian ưu đãi còn ${hours} giờ ${minutes} phút ${seconds} giây`}><span>{hours}</span><i>:</i><span>{minutes}</span><i>:</i><span>{seconds}</span></div><div className="urgency-offer-cta"><span className="urgency-bell" aria-hidden="true"><Bell size={18} /></span><a className="button button-primary" href="#contact">Đăng ký nhận tư vấn <ArrowUpRight size={17} /></a></div></div></div></section>;
+}
+
+function InstructorTeam() {
+  const points = [
+    ["01", "Chấm & review code", "Bài làm được chấm, sửa trực tiếp theo tư duy hệ thống để biết sai ở đâu và vì sao sai."],
+    ["02", "AI-Driven Learning", "Đọc code, phân tích thiết kế, so sánh phương án, debug và kiểm chứng tư duy."],
+    ["03", "Định hướng thương mại", "Học để xây sản phẩm, deploy và bàn giao theo cách doanh nghiệp vận hành."],
+  ];
+  const instructorIcons = [Code2, Sparkles, BriefcaseBusiness];
+  return <section id="instructors" className="section-shell instructor-section"><div className="instructor-layout"><Reveal className="instructor-intro" direction="left"><span className="eyebrow">ĐỘI NGŨ GIẢNG VIÊN</span><h2>Hơn cả một người Thầy.<br /><span>Một người đồng hành.</span></h2><p className="instructor-lead">🚀 Học để làm được việc, không học để hoàn thành giáo trình. Khác biệt nằm ở việc có người chấm, review code và đồng hành đến khi bạn hiểu bản chất.</p><p className="instructor-support">🧑‍💻 Bạn sẽ biết mình sai ở đâu, vì sao sai và lần sau cần làm tốt hơn thế nào.</p><div className="instructor-experience"><strong>11</strong><span>NĂM KINH NGHIỆM<br />IT & ĐỊNH HƯỚNG THƯƠNG MẠI</span></div></Reveal><div className="instructor-points">{points.map(([number, title, copy], index) => { const Icon = instructorIcons[index]; return <Reveal className="instructor-point" key={number} delay={index * .08}><span>{number}</span><Icon className="instructor-point-icon" size={20} aria-hidden="true" /><div><h3>{title}</h3><p>{copy}</p></div></Reveal>; })}</div></div></section>;
+}
 
 function ProgramPrivileges() {
-  return <section className="section-shell privileges-section"><div className="privileges-layout"><Reveal><div className="privileges-copy"><span className="eyebrow">PROGRAM PRIVILEGES · 08</span><h2>Đặc quyền chỉ có tại<br /><span>Program AI5.VN.</span></h2><p>Học kỹ thuật là nền tảng. Sự đồng hành và cơ hội để đi tiếp mới tạo khác biệt.</p><a className="button button-ghost" href="#contact">Nhận tư vấn lộ trình <ArrowRight size={16} /></a></div></Reveal><div className="privileges-list">{programPrivileges.map(([number, title, copy], index) => <Reveal className="privilege" key={number} delay={index * 0.05}><span className="privilege-number">{number}</span><Sparkles size={16} aria-hidden="true" /><div><h3>{title}</h3><p>{copy}</p></div></Reveal>)}</div></div></section>;
+  return <section className="section-shell privileges-section"><div className="privileges-layout"><Reveal><div className="privileges-copy"><span className="eyebrow">PROGRAM PRIVILEGES · 08</span><h2>Đặc quyền chỉ có tại<br /><span>Program AI5.VN.</span></h2><p>Học kỹ thuật là nền tảng. Sự đồng hành và cơ hội để đi tiếp mới tạo khác biệt.</p><a className="button button-ghost" href="#contact">Nhận tư vấn lộ trình <ArrowRight size={16} /></a></div></Reveal><div className="privileges-list">{programPrivileges.map(([number, title, copy], index) => { const Icon = privilegeIcons[index]; return <Reveal className="privilege" key={number} delay={index * 0.05}><span className="privilege-number">{number}</span><Icon size={18} aria-hidden="true" /><div><h3>{title}</h3><p>{copy}</p></div></Reveal>; })}</div></div></section>;
 }
 
 function Mindset() {
@@ -239,4 +253,4 @@ function FAQ() {
 
 function FinalCTA() { const [sent, setSent] = useState(false); return <section id="contact" className="section-shell final-section"><div className="final-lines" /> <Reveal><div className="final-copy"><span className="eyebrow">READY WHEN YOU ARE</span><h2>15 tháng để không chỉ học code —<br /><span>mà học cách trở thành một Software Engineer.</span></h2><p>Xây sản phẩm. Deploy production. Bảo mật hệ thống. Xử lý sự cố. Xây portfolio.</p></div></Reveal><Reveal className="contact-panel" direction="right"><div className="contact-panel-head"><span>START A CONVERSATION</span><Sparkles size={17} /></div>{sent ? <div className="success-state"><Check size={28} /><h3>Đã nhận thông tin.</h3><p>AI5.VN sẽ liên hệ với bạn trong thời gian phù hợp.</p><button className="button button-ghost" onClick={() => setSent(false)}>Gửi lại</button></div> : <form onSubmit={(event) => { event.preventDefault(); setSent(true); }}><label>Họ và tên<input required name="name" placeholder="Nguyễn Văn A" /></label><label>Số điện thoại<input required name="phone" placeholder="09xx xxx xxx" /></label><label>Email<input required type="email" name="email" placeholder="you@example.com" /></label><label>Mục tiêu học tập<select name="goal" defaultValue=""><option value="" disabled>Chọn một mục tiêu</option><option>Trở thành Fullstack Developer</option><option>Củng cố Backend / Frontend</option><option>Học DevSecOps & Cloud</option><option>Xây sản phẩm thương mại</option></select></label><button className="button button-primary" type="submit">Đăng ký tư vấn <ArrowUpRight size={17} /></button><small>Thông tin chỉ được dùng để tư vấn lộ trình phù hợp.</small></form>}</Reveal></section>; }
 
-export function LandingPage() { const { scrollYProgress } = useScroll(); const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 }); useEffect(() => { document.documentElement.style.setProperty("--scroll-progress", "0"); return () => { document.documentElement.style.removeProperty("--scroll-progress"); }; }, []); return <MotionConfig reducedMotion="user"><GlobalBackground /><motion.div className="scroll-progress" style={{ scaleX }} /><main><Hero /><LearnerProof /><ClassroomGallery /><ProgramPrivileges /><ProgramAtAGlance /><CompactRoadmap /><ProgramOutcomes /><FAQ /><FinalCTA /></main><footer className="site-footer"><div><span className="brand-mark">AI5</span><span className="brand-dot">.</span>VN</div><span>SOFTWARE ENGINEER / FULLSTACK DEVELOPER</span><p>Nội dung công nghệ, công cụ và case study có thể được điều chỉnh theo đầu vào lớp học, phiên bản công nghệ và nhu cầu thực tế của doanh nghiệp.</p><span>© 2026 AI5.VN</span></footer><div className="mobile-cta"><a href="#contact">ĐĂNG KÝ TƯ VẤN <ArrowUpRight size={16} /></a></div></MotionConfig>; }
+export function LandingPage() { const { scrollYProgress } = useScroll(); const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 }); useEffect(() => { document.documentElement.style.setProperty("--scroll-progress", "0"); return () => { document.documentElement.style.removeProperty("--scroll-progress"); }; }, []); return <MotionConfig reducedMotion="user"><GlobalBackground /><motion.div className="scroll-progress" style={{ scaleX }} /><main><Hero /><UrgencyOffer /><LearnerProof /><ClassroomGallery /><InstructorTeam /><ProgramPrivileges /><ProgramAtAGlance /><CompactRoadmap /><ProgramOutcomes /><FAQ /><FinalCTA /></main><footer className="site-footer"><div><span className="brand-mark">AI5</span><span className="brand-dot">.</span>VN</div><span>SOFTWARE ENGINEER / FULLSTACK DEVELOPER</span><p>Nội dung công nghệ, công cụ và case study có thể được điều chỉnh theo đầu vào lớp học, phiên bản công nghệ và nhu cầu thực tế của doanh nghiệp.</p><span>© 2026 AI5.VN</span></footer><div className="mobile-cta"><span className="mobile-offer-bell" aria-hidden="true"><Bell size={17} /></span><a href="#contact"><span>ƯU ĐÃI 11 TRIỆU</span><strong>ĐĂNG KÝ TƯ VẤN <ArrowUpRight size={16} /></strong></a></div></MotionConfig>; }

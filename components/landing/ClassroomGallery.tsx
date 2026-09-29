@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import { Pause, Play, ArrowUpRight } from "lucide-react";
-import { FeedbackGallery } from "./FeedbackGallery";
 
 const photos = [
   { file: "01", width: 1908, height: 962, caption: "Thực hành landing page", alt: "Buổi học trực tuyến với phần chia sẻ dự án landing page và trao đổi của học viên" },
@@ -32,7 +31,6 @@ export function ClassroomGallery() {
 
   return (
     <>
-      <FeedbackGallery />
       <section ref={ref} id="classroom" className="section-shell classroom-section" aria-labelledby="classroom-title">
       <div className="classroom-heading">
         <div className="section-heading">

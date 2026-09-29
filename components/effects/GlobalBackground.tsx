@@ -1,12 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export function GlobalBackground() {
-  const [pointer, setPointer] = useState({ x: 50, y: 35 });
+  const glowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const move = (event: PointerEvent) => setPointer({ x: (event.clientX / window.innerWidth) * 100, y: (event.clientY / window.innerHeight) * 100 });
+    const move = (event: PointerEvent) => {
+      const glow = glowRef.current;
+      if (!glow || event.pointerType === "touch") return;
+      glow.style.left = `${(event.clientX / window.innerWidth) * 100}%`;
+      glow.style.top = `${(event.clientY / window.innerHeight) * 100}%`;
+    };
     window.addEventListener("pointermove", move, { passive: true });
     return () => window.removeEventListener("pointermove", move);
   }, []);
@@ -15,7 +20,7 @@ export function GlobalBackground() {
     <div className="global-background" aria-hidden="true">
       <div className="grid-layer" />
       <div className="noise-layer" />
-      <div className="pointer-glow" style={{ left: `${pointer.x}%`, top: `${pointer.y}%` }} />
+      <div ref={glowRef} className="pointer-glow" style={{ left: "50%", top: "35%" }} />
       <div className="network network-a"><i /><i /><i /><i /><span /><span /><span /></div>
       <div className="network network-b"><i /><i /><i /><span /><span /></div>
       <div className="starfield"><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /></div>
