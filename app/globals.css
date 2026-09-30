@@ -980,6 +980,55 @@ body { background-image: none !important; }
 .mobile-cta a strong { display: inline-flex; align-items: center; gap: 7px; font: 700 11px var(--mono); letter-spacing: .08em; }
 .instructor-lead { margin-top: 22px; color: var(--ink); font-size: 17px; line-height: 1.55; }
 .instructor-support { margin-top: 14px; color: #5a776d; font-size: 14px; line-height: 1.6; }
+.hero h1 { font-family: 'Space Grotesk', var(--display); font-weight: 600; letter-spacing: -.065em; line-height: .9; }
+.hero h1 span, .hero h1 em { display: inline-block; }
+.hero h1 em { padding-left: .06em; }
+.hero-urgency { display: block; margin-top: 12px; color: #92561d; font: 600 13px/1.35 'Space Grotesk', Arial, sans-serif; letter-spacing: .01em; }
+.feedback-cta-wrap { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 24px; max-width: 900px; margin: 36px auto 0; padding: 24px 28px; overflow: hidden; border: 1px solid #b9dcca; border-radius: 14px; background: linear-gradient(110deg, #e8f7ee, #ffffff 62%, #f5fbf7); box-shadow: 0 16px 36px rgba(35,91,65,.1); }
+.feedback-cta-wrap::after { content: ""; position: absolute; right: -52px; bottom: -74px; width: 190px; height: 190px; border-radius: 50%; background: rgba(16,138,97,.1); pointer-events: none; }
+.feedback-cta-copy { position: relative; z-index: 1; display: grid; gap: 6px; }
+.feedback-cta-copy strong { color: var(--ink); font: 600 21px/1.2 'Space Grotesk', var(--display); letter-spacing: -.035em; }
+.feedback-cta-copy span { max-width: 590px; color: #5a776d; font-size: 12px; line-height: 1.5; }
+.feedback-cta { position: relative; z-index: 1; flex: 0 0 auto; }
+.feedback-cta-wrap { max-width: 1160px; min-height: 220px; padding: 46px 54px; border-radius: 20px; background: linear-gradient(115deg, #dff4e8 0%, #ffffff 54%, #e7f7ed 100%); box-shadow: 0 24px 60px rgba(35,91,65,.14); }
+.feedback-cta-wrap::before { content: "11M"; position: absolute; right: 30px; bottom: -38px; color: rgba(16,138,97,.075); font: 700 190px/.8 'Space Grotesk', var(--display); letter-spacing: -.12em; pointer-events: none; }
+.feedback-cta-copy { gap: 10px; }
+.feedback-cta-copy::before { content: "Ưu đãi tư vấn trong 6 giờ · học phí lên tới 11 triệu"; color: #9a5a1e; font: 600 13px/1.35 'Space Grotesk', Arial, sans-serif; letter-spacing: .01em; }
+.feedback-cta-copy strong { font-size: 32px; }
+.feedback-cta-copy span { max-width: 620px; font-size: 14px; }
+.feedback-cta { min-width: 280px; min-height: 66px; padding-inline: 27px; font-size: 13px; box-shadow: 0 16px 30px rgba(16,138,97,.22); }
+.offer-modal-backdrop { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; padding: 24px; background: rgba(15, 43, 34, .42); backdrop-filter: blur(9px); animation: offerBackdropIn .24s ease both; }
+.offer-modal { position: relative; width: min(620px, 100%); padding: 48px 52px 42px; border: 1px solid #b5dac6; border-radius: 22px; background: linear-gradient(145deg, #ffffff 0%, #f4fbf6 100%); box-shadow: 0 28px 80px rgba(21, 67, 48, .24); animation: offerModalIn .3s cubic-bezier(.2,.75,.25,1) both; }
+.offer-modal::before { content: ""; position: absolute; top: 0; right: 14%; left: 14%; height: 4px; border-radius: 0 0 8px 8px; background: linear-gradient(90deg, #e58b32, #108a61); }
+.offer-modal-close { position: absolute; top: 15px; right: 15px; display: grid; place-items: center; width: 36px; height: 36px; color: #4d7065; border: 1px solid #c7dfd2; border-radius: 50%; background: #fff; }
+.offer-modal-close:hover { color: var(--ink); border-color: var(--emerald); }
+.offer-modal-kicker { display: inline-flex; align-items: center; gap: 8px; color: #b36b25; font: 600 10px var(--mono); letter-spacing: .08em; }
+.offer-modal-kicker svg { color: #e58b32; }
+.offer-modal h2 { max-width: 14ch; margin-top: 22px; color: var(--ink); font: 600 clamp(2.3rem, 4.4vw, 3.8rem)/.98 'Space Grotesk', var(--display); letter-spacing: -.06em; }
+.offer-modal h2 span { color: var(--emerald); }
+.offer-modal-copy { max-width: 45ch; margin-top: 18px; color: #5a776d; font-size: 14px; line-height: 1.6; }
+.offer-modal form { display: grid; gap: 13px; margin-top: 28px; }
+.offer-modal label { display: grid; gap: 7px; color: #54756a; font: 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.offer-modal input { display: block; width: 100%; padding: 13px 14px; color: var(--ink); border: 1px solid #c8ded2; border-radius: 8px; outline: 0; background: rgba(255,255,255,.82); font: 14px var(--display); transition: border-color .2s ease, box-shadow .2s ease; }
+.offer-modal input:focus { border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(16,138,97,.1); }
+.offer-modal .button { width: 100%; min-height: 52px; margin-top: 7px; }
+.offer-modal-note { display: block; margin-top: 18px; color: #78938a; font: 10px var(--mono); }
+.offer-modal-success { min-height: 300px; display: grid; align-content: center; gap: 14px; }
+.offer-modal-success svg { color: var(--emerald); }
+.offer-modal-success h2 { margin-top: 0; }
+.offer-modal-success p { color: #5a776d; line-height: 1.6; }
+.pre-final-cta { padding-top: 72px; padding-bottom: 72px; background: #fff; }
+.urgency-offer-section--bottom { display: none; }
+.pre-final-cta-inner { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 34px; max-width: 1160px; margin: 0 auto; padding: 48px 56px; overflow: hidden; border: 1px solid #b8dcca; border-radius: 18px; background: linear-gradient(115deg, #153f34, #0f8a61 72%, #0d7252); box-shadow: 0 24px 56px rgba(16,91,64,.2); }
+.pre-final-cta-inner::after { content: ""; position: absolute; right: -86px; bottom: -110px; width: 290px; height: 290px; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; box-shadow: 0 0 0 28px rgba(255,255,255,.06), 0 0 0 58px rgba(255,255,255,.04); pointer-events: none; }
+.pre-final-cta .eyebrow { color: #bcebd4; }
+.pre-final-cta h2 { position: relative; z-index: 1; margin-top: 15px; color: #fff; font: 600 clamp(2.4rem, 5vw, 4.8rem)/.94 'Space Grotesk', var(--display); letter-spacing: -.07em; }
+.pre-final-cta h2 span { color: #b8f1d4; }
+.pre-final-cta p { position: relative; z-index: 1; max-width: 540px; margin-top: 18px; color: #d5f1e2; font-size: 14px; line-height: 1.55; }
+.pre-final-cta .button { position: relative; z-index: 1; flex: 0 0 auto; min-width: 235px; min-height: 60px; color: #14503b; background: #fff; box-shadow: 0 14px 28px rgba(4,54,36,.2); }
+.pre-final-cta .button:hover { color: #fff; background: #126746; }
+@keyframes offerBackdropIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes offerModalIn { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @keyframes mobileBellRing {
   0%, 84%, 100% { transform: rotate(0); }
   86% { transform: rotate(13deg); }
@@ -994,6 +1043,26 @@ body { background-image: none !important; }
   .mobile-cta a { flex: 1; width: auto; min-width: 0; height: 52px; }
   .instructor-lead { font-size: 15px; }
   .instructor-support { font-size: 13px; }
+  .hero h1 { font-size: clamp(3.25rem, 15vw, 4.8rem); line-height: .92; }
+  .feedback-cta-wrap { align-items: flex-start; flex-direction: column; gap: 16px; min-height: 0; margin-top: 26px; padding: 28px 22px; }
+  .feedback-cta-wrap::before { right: -8px; bottom: -22px; font-size: 120px; }
+  .feedback-cta-copy strong { font-size: 24px; }
+  .hero-urgency { font-size: 12px; }
+  .feedback-cta-copy::before { font-size: 12px; }
+  .feedback-cta-copy span { font-size: 11px; }
+  .feedback-cta { width: 100%; min-width: 0; min-height: 58px; }
+  .offer-modal-backdrop { padding: 14px; }
+  .offer-modal { max-height: calc(100svh - 28px); overflow-y: auto; padding: 38px 22px 25px; border-radius: 16px; }
+  .offer-modal h2 { max-width: 12ch; font-size: clamp(2.25rem, 11vw, 3.4rem); }
+  .offer-modal-copy { font-size: 13px; }
+  .pre-final-cta { padding-top: 52px; padding-bottom: 52px; }
+  .urgency-offer-section--top { display: none; }
+  .urgency-offer-section--bottom { display: block; }
+  .pre-final-cta { display: none; }
+  .pre-final-cta-inner { align-items: flex-start; flex-direction: column; gap: 24px; padding: 32px 24px; }
+  .pre-final-cta h2 { font-size: clamp(2.4rem, 12vw, 4rem); }
+  .pre-final-cta p { font-size: 13px; }
+  .pre-final-cta .button { width: 100%; min-width: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .mobile-offer-bell { animation: none; }

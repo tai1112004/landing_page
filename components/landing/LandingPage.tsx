@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, MotionConfig, motion, useInView, useScroll, useSpring } from "framer-motion";
-import { ArrowDown, ArrowRight, ArrowUpRight, BadgeCheck, Bell, BriefcaseBusiness, Check, ChevronDown, CircleDot, Cloud, Code2, Database, FileText, GitBranch, GitCommitHorizontal, GraduationCap, Handshake, LockKeyhole, Network, RefreshCw, Rocket, Search, Server, ShieldCheck, Sparkles, Terminal, Users, Workflow, Zap } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, BadgeCheck, Bell, BriefcaseBusiness, Check, ChevronDown, CircleDot, Cloud, Code2, Database, FileText, GitBranch, GitCommitHorizontal, GraduationCap, Handshake, LockKeyhole, Network, RefreshCw, Rocket, Search, Server, ShieldCheck, Sparkles, Terminal, Users, Workflow, X, Zap } from "lucide-react";
 import { GlobalBackground } from "@/components/effects/GlobalBackground";
 import { ClassroomGallery } from "./ClassroomGallery";
 import { FeedbackGallery } from "./FeedbackGallery";
@@ -53,7 +53,7 @@ function CountUp({ value }: { value: string }) {
 
 const nodeIcons = [Terminal, Code2, Server, Database, Cloud, Network];
 function LearnerProof() {
-  return <section id="feedback" className="section-shell learner-proof-section learner-proof-section--images"><Reveal><SectionTitle eyebrow="LEARNER PROOF" title={<>Học thật.<br /><span>Feedback thật.</span></>} copy="Ảnh chụp nguyên bản từ học viên, giữ nguyên ngữ cảnh để bạn tự đánh giá trải nghiệm học tập." /></Reveal><FeedbackGallery /></section>;
+  return <section id="feedback" className="section-shell learner-proof-section learner-proof-section--images"><Reveal><SectionTitle eyebrow="LEARNER PROOF" title={<>Học thật.<br /><span>Feedback thật.</span></>} copy="Ảnh chụp nguyên bản từ học viên, giữ nguyên ngữ cảnh để bạn tự đánh giá trải nghiệm học tập." /></Reveal><FeedbackGallery /><Reveal className="feedback-cta-wrap"><div className="feedback-cta-copy"><strong>Thấy mình phù hợp?</strong><span>Đăng ký trong 6 giờ để nhận tư vấn tận tình và ưu đãi học phí lên tới 11 triệu.</span></div><a className="button button-primary feedback-cta" href="#contact">Đăng ký nhận tư vấn <ArrowUpRight size={17} /></a></Reveal></section>;
 }
 
 function HeroArchitecture() {
@@ -88,7 +88,7 @@ function HeroProofCard() {
 }
 
 function Hero() {
-  return <section id="overview" className="hero section-shell"><div className="hero-orbit orbit-one" /><div className="hero-content"><Reveal delay={0.1}><div className="hero-badge"><span className="pulse" /> SOFTWARE ENGINEER PROGRAM <b>AI5.VN · 2026</b></div></Reveal><Reveal delay={0.2}><h1><span>Học để làm được việc.</span><br /><em>Xây hệ thống thật.</em></h1></Reveal><Reveal delay={0.35}><p className="hero-copy">15 tháng từ Backend, Frontend đến DevSecOps — để bạn có dự án thật, portfolio thật và năng lực sẵn sàng cho công việc.</p></Reveal><Reveal delay={0.42}><div className="hero-stack" aria-label="Các lớp công nghệ"><span>JAVA / SPRING BOOT</span><b>+</b><span>REACT / NEXT.JS</span><b>+</b><span>DEVSECOPS</span><b>+</b><span>AI ENGINEERING</span></div></Reveal><Reveal delay={0.48}><div className="hero-actions"><a className="button button-primary" href="#contact">Nhận tư vấn lộ trình <ArrowRight size={17} /></a><a className="button button-ghost" href="#feedback">Xem feedback học viên</a></div></Reveal><MetricStrip /></div><Reveal className="hero-visual" direction="right" delay={0.25}><HeroProofCard /></Reveal><a className="scroll-cue" href="#feedback"><span>HỌC VIÊN NÓI GÌ</span><ArrowDown size={16} /></a></section>;
+  return <section id="overview" className="hero section-shell"><div className="hero-orbit orbit-one" /><div className="hero-content"><Reveal delay={0.1}><div className="hero-badge"><span className="pulse" /> SOFTWARE ENGINEER PROGRAM <b>AI5.VN · 2026</b></div></Reveal><Reveal delay={0.2}><h1><span>Học để làm được việc.</span><br /><em>Xây hệ thống thật.</em></h1></Reveal><Reveal delay={0.35}><p className="hero-copy">15 tháng từ Backend, Frontend đến DevSecOps — để bạn có dự án thật, portfolio thật và năng lực sẵn sàng cho công việc.</p></Reveal><Reveal delay={0.42}><div className="hero-stack" aria-label="Các lớp công nghệ"><span>JAVA / SPRING BOOT</span><b>+</b><span>REACT / NEXT.JS</span><b>+</b><span>DEVSECOPS</span><b>+</b><span>AI ENGINEERING</span></div></Reveal><Reveal delay={0.48}><div className="hero-actions"><a className="button button-primary" href="#contact">Nhận tư vấn lộ trình <ArrowRight size={17} /></a><a className="button button-ghost" href="#feedback">Xem feedback học viên</a></div><span className="hero-urgency">Ưu đãi tư vấn trong 6 giờ · học phí lên tới 11 triệu</span></Reveal><MetricStrip /></div><Reveal className="hero-visual" direction="right" delay={0.25}><HeroProofCard /></Reveal><a className="scroll-cue" href="#feedback"><span>HỌC VIÊN NÓI GÌ</span><ArrowDown size={16} /></a></section>;
 }
 
 const programPromise = [
@@ -139,7 +139,7 @@ const programPrivileges = [
 ];
 const privilegeIcons = [Users, RefreshCw, BriefcaseBusiness, FileText, GraduationCap, Handshake, BadgeCheck, Rocket];
 
-function UrgencyOffer() {
+function UrgencyOffer({ placement = "top" }: { placement?: "top" | "bottom" }) {
   const [secondsLeft, setSecondsLeft] = useState(6 * 60 * 60);
   useEffect(() => {
     const timer = window.setInterval(() => setSecondsLeft((current) => current > 0 ? current - 1 : 0), 1000);
@@ -148,7 +148,7 @@ function UrgencyOffer() {
   const hours = String(Math.floor(secondsLeft / 3600)).padStart(2, "0");
   const minutes = String(Math.floor((secondsLeft % 3600) / 60)).padStart(2, "0");
   const seconds = String(secondsLeft % 60).padStart(2, "0");
-  return <section id="offer" className="section-shell urgency-offer-section"><div className="urgency-offer"><div><span className="eyebrow">ƯU ĐÃI TƯ VẤN TRONG 6 GIỜ</span><h2>Đăng ký để nhận tư vấn tận tình<br /><span>và ưu đãi học phí lên tới 11 triệu.</span></h2><p>Để lại thông tin trong thời gian ưu đãi để được tư vấn lộ trình phù hợp với mục tiêu của bạn.</p></div><div className="urgency-offer-action"><div className="urgency-timer" aria-label={`Thời gian ưu đãi còn ${hours} giờ ${minutes} phút ${seconds} giây`}><span>{hours}</span><i>:</i><span>{minutes}</span><i>:</i><span>{seconds}</span></div><div className="urgency-offer-cta"><span className="urgency-bell" aria-hidden="true"><Bell size={18} /></span><a className="button button-primary" href="#contact">Đăng ký nhận tư vấn <ArrowUpRight size={17} /></a></div></div></div></section>;
+  return <section id={placement === "top" ? "offer" : "offer-mobile"} className={`section-shell urgency-offer-section urgency-offer-section--${placement}`}><div className="urgency-offer"><div><span className="eyebrow">ƯU ĐÃI TƯ VẤN TRONG 6 GIỜ</span><h2>Đăng ký để nhận tư vấn tận tình<br /><span>và ưu đãi học phí lên tới 11 triệu.</span></h2><p>Để lại thông tin trong thời gian ưu đãi để được tư vấn lộ trình phù hợp với mục tiêu của bạn.</p></div><div className="urgency-offer-action"><div className="urgency-timer" aria-label={`Thời gian ưu đãi còn ${hours} giờ ${minutes} phút ${seconds} giây`}><span>{hours}</span><i>:</i><span>{minutes}</span><i>:</i><span>{seconds}</span></div><div className="urgency-offer-cta"><span className="urgency-bell" aria-hidden="true"><Bell size={18} /></span><a className="button button-primary" href="#contact">Đăng ký nhận tư vấn <ArrowUpRight size={17} /></a></div></div></div></section>;
 }
 
 function InstructorTeam() {
@@ -253,4 +253,30 @@ function FAQ() {
 
 function FinalCTA() { const [sent, setSent] = useState(false); return <section id="contact" className="section-shell final-section"><div className="final-lines" /> <Reveal><div className="final-copy"><span className="eyebrow">READY WHEN YOU ARE</span><h2>15 tháng để không chỉ học code —<br /><span>mà học cách trở thành một Software Engineer.</span></h2><p>Xây sản phẩm. Deploy production. Bảo mật hệ thống. Xử lý sự cố. Xây portfolio.</p></div></Reveal><Reveal className="contact-panel" direction="right"><div className="contact-panel-head"><span>START A CONVERSATION</span><Sparkles size={17} /></div>{sent ? <div className="success-state"><Check size={28} /><h3>Đã nhận thông tin.</h3><p>AI5.VN sẽ liên hệ với bạn trong thời gian phù hợp.</p><button className="button button-ghost" onClick={() => setSent(false)}>Gửi lại</button></div> : <form onSubmit={(event) => { event.preventDefault(); setSent(true); }}><label>Họ và tên<input required name="name" placeholder="Nguyễn Văn A" /></label><label>Số điện thoại<input required name="phone" placeholder="09xx xxx xxx" /></label><label>Email<input required type="email" name="email" placeholder="you@example.com" /></label><label>Mục tiêu học tập<select name="goal" defaultValue=""><option value="" disabled>Chọn một mục tiêu</option><option>Trở thành Fullstack Developer</option><option>Củng cố Backend / Frontend</option><option>Học DevSecOps & Cloud</option><option>Xây sản phẩm thương mại</option></select></label><button className="button button-primary" type="submit">Đăng ký tư vấn <ArrowUpRight size={17} /></button><small>Thông tin chỉ được dùng để tư vấn lộ trình phù hợp.</small></form>}</Reveal></section>; }
 
-export function LandingPage() { const { scrollYProgress } = useScroll(); const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 }); useEffect(() => { document.documentElement.style.setProperty("--scroll-progress", "0"); return () => { document.documentElement.style.removeProperty("--scroll-progress"); }; }, []); return <MotionConfig reducedMotion="user"><GlobalBackground /><motion.div className="scroll-progress" style={{ scaleX }} /><main><Hero /><UrgencyOffer /><LearnerProof /><ClassroomGallery /><InstructorTeam /><ProgramPrivileges /><ProgramAtAGlance /><CompactRoadmap /><ProgramOutcomes /><FAQ /><FinalCTA /></main><footer className="site-footer"><div><span className="brand-mark">AI5</span><span className="brand-dot">.</span>VN</div><span>SOFTWARE ENGINEER / FULLSTACK DEVELOPER</span><p>Nội dung công nghệ, công cụ và case study có thể được điều chỉnh theo đầu vào lớp học, phiên bản công nghệ và nhu cầu thực tế của doanh nghiệp.</p><span>© 2026 AI5.VN</span></footer><div className="mobile-cta"><span className="mobile-offer-bell" aria-hidden="true"><Bell size={17} /></span><a href="#contact"><span>ƯU ĐÃI 11 TRIỆU</span><strong>ĐĂNG KÝ TƯ VẤN <ArrowUpRight size={16} /></strong></a></div></MotionConfig>; }
+function OfferModal() {
+  const [open, setOpen] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setOpen(true), 180);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", closeOnEscape);
+    return () => { document.body.style.overflow = previousOverflow; document.removeEventListener("keydown", closeOnEscape); };
+  }, [open]);
+
+  if (!open) return null;
+  return <div className="offer-modal-backdrop" role="presentation" onMouseDown={() => setOpen(false)}><div className="offer-modal" role="dialog" aria-modal="true" aria-labelledby="offer-modal-title" onMouseDown={(event) => event.stopPropagation()}><button type="button" className="offer-modal-close" aria-label="Đóng ưu đãi" onClick={() => setOpen(false)}><X size={20} /></button>{sent ? <div className="offer-modal-success"><Check size={34} /><h2>Đã nhận thông tin.</h2><p>AI5.VN sẽ liên hệ để tư vấn lộ trình phù hợp cho bạn.</p></div> : <><div className="offer-modal-kicker"><Bell size={15} /> ƯU ĐÃI TƯ VẤN TRONG 6 GIỜ</div><h2 id="offer-modal-title">Đăng ký để nhận<br /><span>ưu đãi đến 11 triệu.</span></h2><p className="offer-modal-copy">Để lại thông tin để được tư vấn tận tình về lộ trình, học phí và mục tiêu nghề nghiệp của bạn.</p><form onSubmit={(event) => { event.preventDefault(); setSent(true); }}><label>Họ và tên<input required name="offer-name" placeholder="Nguyễn Văn A" /></label><label>Số điện thoại<input required name="offer-phone" placeholder="09xx xxx xxx" /></label><button className="button button-primary" type="submit">Nhận tư vấn & ưu đãi <ArrowUpRight size={17} /></button></form><small className="offer-modal-note">Ưu đãi áp dụng trong thời gian tư vấn hiện tại.</small></>}</div></div>;
+}
+
+function PreFinalCTA() {
+  return <section className="section-shell pre-final-cta"><Reveal><div className="pre-final-cta-inner"><div><span className="eyebrow">BƯỚC TIẾP THEO</span><h2>Sẵn sàng bắt đầu<br /><span>lộ trình của bạn?</span></h2><p>Đăng ký trong 6 giờ để nhận tư vấn tận tình và ưu đãi học phí lên tới 11 triệu.</p></div><a className="button button-primary" href="#contact">Đăng ký tư vấn <ArrowUpRight size={18} /></a></div></Reveal></section>;
+}
+
+export function LandingPage() { const { scrollYProgress } = useScroll(); const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 }); useEffect(() => { document.documentElement.style.setProperty("--scroll-progress", "0"); return () => { document.documentElement.style.removeProperty("--scroll-progress"); }; }, []); return <MotionConfig reducedMotion="user"><GlobalBackground /><motion.div className="scroll-progress" style={{ scaleX }} /><OfferModal /><main><Hero /><UrgencyOffer placement="top" /><LearnerProof /><ClassroomGallery /><InstructorTeam /><ProgramPrivileges /><ProgramAtAGlance /><CompactRoadmap /><ProgramOutcomes /><FAQ /><UrgencyOffer placement="bottom" /><PreFinalCTA /><FinalCTA /></main><footer className="site-footer"><div><span className="brand-mark">AI5</span><span className="brand-dot">.</span>VN</div><span>SOFTWARE ENGINEER / FULLSTACK DEVELOPER</span><p>Nội dung công nghệ, công cụ và case study có thể được điều chỉnh theo đầu vào lớp học, phiên bản công nghệ và nhu cầu thực tế của doanh nghiệp.</p><span>© 2026 AI5.VN</span></footer><div className="mobile-cta"><span className="mobile-offer-bell" aria-hidden="true"><Bell size={17} /></span><a href="#contact"><span>ƯU ĐÃI 11 TRIỆU</span><strong>ĐĂNG KÝ TƯ VẤN <ArrowUpRight size={16} /></strong></a></div></MotionConfig>; }
